@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+description = 'A JVM-compatible Ada implementation'
+group = 'com.github.jada'
+version = '0.0.1'
+defaultTasks 'check', 'assemble'
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    antlr
+}
+
+dependencies {
+    compile 'org.antlr:antlr4:[4.5.1,5.0)'
+    compile 'org.ow2.asm:asm:[5.0.4,6.0)'
+
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+    testCompile 'cglib:cglib-nodep:[3.1,4.0)'
+
+
+    antlr 'org.antlr:antlr4:[4.5.1,5.0)'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += "${buildDir}/grammars"
+        }
+    }
+}
+
+task buildGrammars(type: JavaExec) {
+    File outputDirectory = file("${buildDir}/grammars")
+    outputDirectory.mkdirs()
+
+    group 'Build'
+    description 'Use Antlr4 to compile grammars to Java files'
+    classpath configurations.antlr
+    main 'org.antlr.v4.Tool'
+    args "${projectDir}/src/main/grammars/Ada.g4",
+        '-package', 'com.github.jada.grammars',
+        '-Werror', '-o', outputDirectory.absolutePath
+}
+classes.dependsOn buildGrammars
