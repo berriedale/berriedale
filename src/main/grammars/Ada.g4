@@ -1,5 +1,14 @@
 grammar Ada;
 
-r  : 'hello' ID ;         // match keyword hello followed by an identifier
-ID : [a-z]+ ;             // match lower-case identifiers
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+
+/* Rules */
+procedureDeclaration
+    : 'procedure' IDENTIFIER 'is' block;
+
+block : 'begin' WS? BLOCK_BODY? 'end' IDENTIFIER ';' ;
+
+/* Tokens */
+IDENTIFIER : [a-zA-Z_]+ ;
+BLOCK_BODY : [a-zA-Z]+ ;
+
+WS : [ \t\r\n]+ -> skip ;
