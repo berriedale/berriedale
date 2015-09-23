@@ -1,3 +1,17 @@
-= JAda
+= Jada
 
+The realistic goal for this project is to become an exercise in building a
+compiler for me. The fantasy goal however is to build a JVM-compatible Ada
+compiler which takes link:http://www.adacore.com/adaanswers/about/ada-2012/[Ada
+2012] in one side, and emits JVM bytecode out the other.
+
+
+== Hacking
+
+This project uses link:http://gradle.org[Gradle] for its build and dependency
+management. It is assumed that developers will be running on at least JDK7 or
+later.
+
+* Testing: `./gradlew check`
+* Packaging: `./gradlew assemble`
 
