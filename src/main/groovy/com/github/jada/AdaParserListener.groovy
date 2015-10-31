@@ -31,9 +31,11 @@ class AdaParserListener implements AdaListener {
     }
 
     void visitTerminal(TerminalNode node) {
+        println 'visitTerminal'
     }
 
     void visitErrorNode(ErrorNode node) {
+        println 'errornode'
     }
 
     void enterBlock(AdaParser.BlockContext context) {

@@ -32,21 +32,11 @@ class CompilerSpec extends Specification {
         final String buffer = '''
 procedure Main is
 begin
-
+  null;
 end Main;
 '''
         Compiler compiler = new Compiler()
-        ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(buffer.bytes))
-        // create a lexer that feeds off of input CharStream
-        AdaLexer lexer = new AdaLexer(input)
-        // alternatively: create the lexer with ArrayInitLexer()
-        // then attach the input stream using `setInputStream`
-        // create a buffer of tokens pulled from the lexer
-        CommonTokenStream tokens = new CommonTokenStream(lexer)
-        AdaParser parser = new AdaParser(tokens)
-        ParseTree tree = parser.procedureDeclaration()
-        ParseTreeWalker walker = new ParseTreeWalker()
-        walker.walk(new AdaASTListener(), tree)
+        compiler.compileString(buffer)
 
         expect:
         true
