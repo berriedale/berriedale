@@ -1,4 +1,4 @@
-package com.github.jada.internal
+package com.github.berriedale.internal
 
 import org.objectweb.asm.*
 

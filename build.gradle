@@ -4,7 +4,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 description = 'A JVM-compatible Ada implementation'
-group = 'com.github.jada'
+group = 'com.github.berriedale'
 version = '0.0.1'
 defaultTasks 'check', 'assemble'
 
@@ -49,7 +49,7 @@ task buildGrammars(type: JavaExec) {
     classpath configurations.antlr
     main 'org.antlr.v4.Tool'
     args "${inputDir}/Ada.g4",
-        '-package', 'com.github.jada.grammars',
+        '-package', 'com.github.berriedale.grammars',
         '-lib', inputDir,
         '-Werror', '-o', outputDirectory.absolutePath
 

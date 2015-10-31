@@ -1,4 +1,4 @@
-package com.github.jada.errors
+package com.github.berriedale.errors
 
 /**
  * Error thrown when we cannot compile code

@@ -1,9 +1,9 @@
-package com.github.jada
+package com.github.berriedale
 
-import com.github.jada.internal.*
+import com.github.berriedale.internal.*
 
-import com.github.jada.grammars.AdaListener
-import com.github.jada.grammars.AdaParser
+import com.github.berriedale.grammars.AdaListener
+import com.github.berriedale.grammars.AdaParser
 
 import org.antlr.v4.runtime.ParserRuleContext
 import org.antlr.v4.runtime.tree.ErrorNode

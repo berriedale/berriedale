@@ -1,7 +1,7 @@
-package com.github.jada;
+package com.github.berriedale
 
-import com.github.jada.grammars.*
-import com.github.jada.internal.*
+import com.github.berriedale.grammars.*
+import com.github.berriedale.internal.*
 
 import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
