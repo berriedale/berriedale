@@ -1,10 +1,10 @@
 grammar Ada;
 import LexerRules;
 
-
 /* Rules */
 procedureDeclaration
-    : 'procedure' IDENTIFIER 'is' block;
+    : 'procedure' ID 'is' block;
 
-block : 'begin' WS? BLOCK_BODY? 'end' IDENTIFIER ';' ;
+block : 'begin' (BLOCK_BODY | nullStatement) 'end' ID ';' ;
 
+nullStatement: 'null' ';' ;
