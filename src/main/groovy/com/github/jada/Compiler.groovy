@@ -1,6 +1,7 @@
 package com.github.jada;
 
 import com.github.jada.grammars.*
+import com.github.jada.internal.*
 
 import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
@@ -14,7 +15,9 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker
  * Primary compiler interface
  */
 class Compiler {
-    void compileString(String buffer) {
+    CompilationUnit compileString(String buffer) {
+        CompilationUnit root = new RootCompilationUnit()
+
         ANTLRInputStream input = new ANTLRInputStream(new ByteArrayInputStream(buffer.bytes))
         // create a lexer that feeds off of input CharStream
         AdaLexer lexer = new AdaLexer(input)
@@ -25,6 +28,8 @@ class Compiler {
         AdaParser parser = new AdaParser(tokens)
         ParseTree tree = parser.procedureDeclaration()
         ParseTreeWalker walker = new ParseTreeWalker()
-        walker.walk(new AdaParserListener(), tree)
+        walker.walk(new AdaParserListener(root), tree)
+
+        return root
     }
 }

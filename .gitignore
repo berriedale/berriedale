@@ -4,3 +4,4 @@ build/
 tmp/
 *.im*
 .idea/
+/bin/
