@@ -18,6 +18,7 @@ configurations {
 dependencies {
     compile 'org.antlr:antlr4:[4.5.1,5.0)'
     compile 'org.ow2.asm:asm:[5.0.4,6.0)'
+    compile 'org.codehaus.groovy:groovy:[2.4.5,2.5)'
 
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
     testCompile 'cglib:cglib-nodep:[3.1,4.0)'
@@ -29,6 +30,10 @@ sourceSets {
     main {
         java {
             srcDirs += "${buildDir}/grammars"
+            exclude '**/*.swp'
+        }
+        groovy {
+            exclude '**/*.swp'
         }
     }
 }
@@ -47,7 +52,7 @@ task buildGrammars(type: JavaExec) {
         '-lib', inputDir,
         '-Werror', '-o', outputDirectory.absolutePath
 
-    inputs.dir inputDir
+    inputs.source fileTree(inputDir).include('*.g4')
     outputs.dir outputDirectory
 }
 classes.dependsOn buildGrammars
