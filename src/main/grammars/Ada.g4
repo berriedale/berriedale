@@ -1,10 +1,29 @@
 grammar Ada;
 import LexerRules;
 
-/* Rules */
-procedureDeclaration
-    : 'procedure' ID 'is' block;
 
-block : 'begin' (BLOCK_BODY | nullStatement) 'end' ID ';' ;
+/* Primary rule, everything more ot less fits into a compilationg unit */
+compilationUnit : (procedureDeclaration
+    | withDeclaration)+ ;
 
-nullStatement: 'null' ';' ;
+
+/*
+    procedure Main is
+    begin
+      null;
+    end Main;
+*/
+procedureDeclaration : 'procedure' ID 'is' block;
+
+/*
+    with Ada.Streams;
+*/
+withDeclaration : 'with' ID ';' ;
+block           : 'begin' (BLOCK_BODY | expression | nullStatement) 'end' ID ';' ;
+nullStatement   : 'null' ';' ;
+expression      : ID ('.' ID)* '('
+    (expression |
+     ID         |
+     STRING) ')' ';' ;
+
+expressionList  : expression (',' expression)* ;

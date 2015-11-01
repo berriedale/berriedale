@@ -4,6 +4,7 @@ lexer grammar LexerRules;
 ID         : [a-zA-Z_]+                 ;
 INT        : DIGIT+                     ;
 BLOCK_BODY : [a-zA-Z]+                  ;
+STRING     : '"' SChar+ '"'             ;
 
 
 /* skip all whitespace */
@@ -16,3 +17,4 @@ fragment DIGIT   : [0-9]      ;
 fragment NEWLINE : '\r'? '\n' ;
 fragment TAB     : '\t'       ;
 
+fragment SChar   : ~["\\\\r\n];
