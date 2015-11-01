@@ -13,6 +13,21 @@ import org.antlr.v4.runtime.tree.ParseTree
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 import spock.lang.*
 
+
+import groovy.transform.TypeChecked
+
+@TypeChecked
+class ClassLoadingHarness extends ClassLoader {
+    boolean executeCode(String name, byte[] code) {
+        Class<?> testClass = this.defineClass(name,
+                                        code,
+                                        0,
+                                        code.length)
+        testClass.methods[0].invoke(null, [null] as Object[])
+        return true
+    }
+}
+
 class CompilerSpec extends Specification {
     Compiler compiler
 
@@ -33,7 +48,7 @@ class CompilerSpec extends Specification {
     }
 
 
-    def "wompwomp"() {
+    def "Compile a basic Main procedure "() {
         given:
         CompilationUnit unit = null
         final String buffer = '''
@@ -53,10 +68,7 @@ end Main;
         unit.expressions[0].identifier == 'Main'
 
         and: 'the CompilationUnit should emit byte code'
-        unit.asByteCode
-        FileOutputStream fos = new FileOutputStream('Root.class')
-        fos.write(unit.asByteCode)
-        fos.close()
-
+        def harness = new ClassLoadingHarness()
+        harness.executeCode('Root', unit.asByteCode)
     }
 }

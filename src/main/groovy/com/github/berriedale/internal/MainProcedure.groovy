@@ -21,8 +21,19 @@ class MainProcedure extends Procedure {
                                     "([Ljava/lang/String;)V",
                                     null,
                                     null)
+        //visitor.visitInsn(RETURN);
+        //visitor.visitMaxs(1, 1);
+        visitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out",
+                "Ljava/io/PrintStream;");
+        // pushes the "Hello World!" String constant
+        visitor.visitLdcInsn("Hello world!");
+        // invokes the 'println' method (defined in the PrintStream class)
+        visitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println",
+                "(Ljava/lang/String;)V");
         visitor.visitInsn(RETURN);
-        visitor.visitMaxs(1, 1);
+        // this code uses a maximum of two stack elements and two local
+        // variables
+        visitor.visitMaxs(2, 2);
         visitor.visitEnd()
     }
 }

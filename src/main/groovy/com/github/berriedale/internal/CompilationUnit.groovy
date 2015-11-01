@@ -33,6 +33,9 @@ class CompilationUnit implements Opcodes {
         this.identifier = id
     }
 
+    byte[] getAsByteCode() {
+        return [] as byte[]
+    }
 
     protected void visit(ClassWriter writer) {
         /* no-op */
