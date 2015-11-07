@@ -31,10 +31,15 @@ sourceSets {
     main {
         java {
             srcDirs += "${buildDir}/grammars"
-            exclude '**/*.swp'
         }
         groovy {
-            exclude '**/*.swp'
+            exclude '**/*.sw*'
+        }
+    }
+
+    test {
+        groovy {
+            exclude '**/*.sw*'
         }
     }
 }
