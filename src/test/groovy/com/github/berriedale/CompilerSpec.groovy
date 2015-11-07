@@ -30,6 +30,7 @@ class ClassLoadingHarness extends ClassLoader {
 
 class CompilerSpec extends Specification {
     Compiler compiler
+    CompilationUnit unit
 
     def setup() {
         this.compiler = new Compiler()
@@ -48,10 +49,9 @@ class CompilerSpec extends Specification {
     }
 
 
-    def "Compile a basic Main procedure "() {
+    def "Compile a basic no-op Main procedure "() {
         given:
-        CompilationUnit unit = null
-        final String buffer = '''
+        final String buffer = '''\
 procedure Main is
 begin
   null;
@@ -70,5 +70,25 @@ end Main;
         and: 'the CompilationUnit should emit byte code'
         def harness = new ClassLoadingHarness()
         harness.executeCode('Root', unit.asByteCode)
+    }
+
+    def "Compile a basic procedure that invokes Java code"() {
+        given:
+        final String buffer = '''\
+with Java;
+procedure Main is
+begin
+  System.out.println ("hello");
+end Main;
+'''
+
+        when:
+        unit = compiler.compileString(buffer)
+
+        then: 'there should be expressions collected'
+        unit.expressions.size == 1
+
+        and: 'the primary expression should be "Main"'
+        unit.expressions[0].identifier == 'Main'
     }
 }

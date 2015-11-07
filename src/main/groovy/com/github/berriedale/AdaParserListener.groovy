@@ -43,11 +43,9 @@ class AdaParserListener implements AdaListener {
     }
 
     void enterEveryRule(ParserRuleContext context) {
-        println("enter every (${context})");
     }
 
     void exitEveryRule(ParserRuleContext context) {
-        println("exit every (${context})");
     }
 
     void visitTerminal(TerminalNode node) {
@@ -59,7 +57,7 @@ class AdaParserListener implements AdaListener {
     }
 
     void enterBlock(AdaParser.BlockContext context) {
-        println "enterBlock (${context})"
+        //println "enterBlock (${context}) ${context.expression(0)?.OBJREF()}"
     }
 
     void exitBlock(AdaParser.BlockContext context) {
@@ -73,4 +71,30 @@ class AdaParserListener implements AdaListener {
     void exitNullStatement(AdaParser.NullStatementContext ctx) {
         println "end null statement"
     }
+
+    void enterWithDeclaration(AdaParser.WithDeclarationContext ctx) {
+        //println "with ${ctx.OBJREF()}"
+       // println "with ${ctx.ID()}"
+    }
+
+    void exitWithDeclaration(AdaParser.WithDeclarationContext ctx) {
+    }
+
+    void enterCompilationUnit(AdaParser.CompilationUnitContext ctx) {
+    }
+
+    void exitCompilationUnit(AdaParser.CompilationUnitContext ctx) {
+    }
+
+    void enterExpression(AdaParser.ExpressionContext ctx) {
+    }
+
+    void exitExpression(AdaParser.ExpressionContext ctx) {
+    }
+
+    void enterRefList(AdaParser.RefListContext ctx) { }
+    void exitRefList(AdaParser.RefListContext ctx) { }
+
+    void enterObjectRef(AdaParser.ObjectRefContext ctx) { }
+    void exitObjectRef(AdaParser.ObjectRefContext ctx) { }
 }

@@ -3,9 +3,13 @@ import LexerRules;
 
 
 /* Primary rule, everything more ot less fits into a compilationg unit */
-compilationUnit : (procedureDeclaration
-    | withDeclaration)+ ;
+compilationUnit : ( withDeclaration | procedureDeclaration )+ ;
 
+
+/*
+    with Ada.Streams;
+*/
+withDeclaration : 'with' refList ';' ;
 
 /*
     procedure Main is
@@ -14,16 +18,13 @@ compilationUnit : (procedureDeclaration
     end Main;
 */
 procedureDeclaration : 'procedure' ID 'is' block;
-
-/*
-    with Ada.Streams;
-*/
-withDeclaration : 'with' ID ';' ;
-block           : 'begin' (BLOCK_BODY | expression | nullStatement) 'end' ID ';' ;
+block           : 'begin' (expression | nullStatement)+ 'end' ID ';' ;
 nullStatement   : 'null' ';' ;
-expression      : ID ('.' ID)* '('
+expression      : objectRef '('
     (expression |
-     ID         |
+     objectRef  |
      STRING) ')' ';' ;
 
-expressionList  : expression (',' expression)* ;
+objectRef : ID ('.' ID)* ;
+refList   : objectRef (',' objectRef)* ;
+//expressionList  : expression (',' expression)* ;

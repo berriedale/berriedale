@@ -1,15 +1,12 @@
 lexer grammar LexerRules;
 
-/* Tokens */
-ID         : [a-zA-Z_]+                 ;
+ID         : Letter LetterOrDigit*      ;
 INT        : DIGIT+                     ;
 BLOCK_BODY : [a-zA-Z]+                  ;
-STRING     : '"' SChar+ '"'             ;
-
+STRING     : '"' STRING_CHAR* '"'             ;
 
 /* skip all whitespace */
 WS : (' ' | NEWLINE | TAB) -> skip      ;
-
 
 /* To be re-used in all numeric lexer rules */
 fragment DIGIT   : [0-9]      ;
@@ -17,4 +14,7 @@ fragment DIGIT   : [0-9]      ;
 fragment NEWLINE : '\r'? '\n' ;
 fragment TAB     : '\t'       ;
 
-fragment SChar   : ~["\\\\r\n];
+fragment STRING_CHAR : ~["\\\\r\n];
+
+fragment Letter : [a-zA-Z$_] ;
+fragment LetterOrDigit : [a-zA-Z0-9$_] ;

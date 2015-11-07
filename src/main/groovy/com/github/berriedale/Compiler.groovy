@@ -26,7 +26,8 @@ class Compiler {
         // create a buffer of tokens pulled from the lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer)
         AdaParser parser = new AdaParser(tokens)
-        ParseTree tree = parser.procedureDeclaration()
+        ParseTree tree = parser.compilationUnit()
+
         ParseTreeWalker walker = new ParseTreeWalker()
         walker.walk(new AdaParserListener(root), tree)
 
